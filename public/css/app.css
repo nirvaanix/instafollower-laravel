@@ -1,0 +1,866 @@
+/* ==========================================================================
+   Design System & Tokens
+   ========================================================================== */
+:root {
+  /* Colors */
+  --bg-color: #07080A;
+  --surface-color: #111214;
+  --surface-color-light: #1A1C1F;
+  --text-primary: #F0F2F5;
+  --text-secondary: #8B8D97;
+  --text-tertiary: #55575E;
+  --success: #34D058;
+  --error: #F85149;
+
+  /* Gradients */
+  --instagram-gradient: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  --instagram-gradient-subtle: linear-gradient(135deg, rgba(240,148,51,0.15) 0%, rgba(220,39,67,0.15) 50%, rgba(188,24,136,0.15) 100%);
+  --glass-bg: rgba(17, 18, 20, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-border-hover: rgba(255, 255, 255, 0.12);
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 30px rgba(220, 39, 67, 0.35), 0 0 60px rgba(220, 39, 67, 0.15);
+  --shadow-glow-sm: 0 0 15px rgba(220, 39, 67, 0.2);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-med: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Background Effects */
+.bg-blobs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--bg-color);
+}
+
+.blob {
+  position: absolute;
+  filter: blur(100px);
+  opacity: 0.3;
+  animation: float 25s ease-in-out infinite;
+}
+
+.blob-1 {
+  top: -15%;
+  left: -10%;
+  width: 45vw;
+  height: 45vw;
+  background: radial-gradient(circle, rgba(220,39,67,0.4) 0%, transparent 70%);
+}
+
+.blob-2 {
+  bottom: -15%;
+  right: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(240,148,51,0.25) 0%, transparent 70%);
+  animation-delay: -12s;
+}
+
+.blob-3 {
+  top: 40%;
+  left: 50%;
+  width: 35vw;
+  height: 35vw;
+  background: radial-gradient(circle, rgba(188,24,136,0.2) 0%, transparent 70%);
+  animation-delay: -6s;
+}
+
+/* ==========================================================================
+   Layout & Utilities
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: border-color var(--transition-fast);
+}
+
+.glass-card:hover {
+  border-color: var(--glass-border-hover);
+}
+
+.text-gradient {
+  background: var(--instagram-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==========================================================================
+   Alerts / Flash Messages
+   ========================================================================== */
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  animation: slideDown 0.4s ease;
+}
+
+.alert-error {
+  background: rgba(248, 81, 73, 0.1);
+  border: 1px solid rgba(248, 81, 73, 0.25);
+  color: #F87171;
+}
+
+.alert-success {
+  background: rgba(52, 208, 88, 0.1);
+  border: 1px solid rgba(52, 208, 88, 0.25);
+  color: #6EE7B7;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Navbar
+   ========================================================================== */
+.navbar {
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity var(--transition-fast);
+}
+
+.logo:hover {
+  opacity: 0.85;
+}
+
+.logo span {
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.btn-nav {
+  padding: 0.6rem 1.4rem !important;
+  font-size: 0.85rem !important;
+  background: var(--surface-color-light) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--text-primary) !important;
+}
+
+.btn-nav:hover {
+  background: var(--surface-color) !important;
+  border-color: var(--glass-border-hover) !important;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: var(--font-family);
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: var(--instagram-gradient);
+  color: white;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-cta {
+  padding: 1.1rem 2.5rem;
+  font-size: 1.05rem;
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.btn-disconnect {
+  background: rgba(248, 81, 73, 0.08);
+  border: 1px solid rgba(248, 81, 73, 0.2);
+  color: #F87171;
+  padding: 0.7rem 1.4rem;
+  font-size: 0.85rem;
+}
+
+.btn-disconnect:hover {
+  background: rgba(248, 81, 73, 0.15);
+  border-color: rgba(248, 81, 73, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-instagram-link {
+  background: var(--surface-color-light);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  padding: 0.8rem 1.8rem;
+  font-size: 0.9rem;
+}
+
+.btn-instagram-link:hover {
+  border-color: var(--glass-border-hover);
+  background: var(--surface-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   Hero Section (Landing Page)
+   ========================================================================== */
+.hero {
+  padding: 8rem 0 5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-secondary);
+  background: var(--surface-color-light);
+  border: 1px solid var(--glass-border);
+}
+
+.hero-badge svg {
+  color: #f09433;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -2px;
+  max-width: 750px;
+  margin-top: 0.5rem;
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  max-width: 550px;
+  line-height: 1.7;
+  margin: 0 auto;
+}
+
+.hero-cta-area {
+  margin-top: 1.5rem;
+  position: relative;
+}
+
+.hero-cta-note {
+  margin-top: 0.85rem;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+}
+
+/* URL Preview Card */
+.url-preview {
+  margin-top: 3rem;
+  padding: 1.5rem 2rem;
+  text-align: left;
+  max-width: 440px;
+  width: 100%;
+}
+
+.url-preview-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-tertiary);
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+}
+
+.url-preview-url {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.url-dim {
+  color: var(--text-tertiary);
+}
+
+.url-highlight {
+  background: var(--instagram-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.url-preview-response {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.url-arrow {
+  color: var(--success);
+  font-weight: 700;
+}
+
+.url-response-text {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   Features Section
+   ========================================================================== */
+.features-section {
+  padding: 5rem 0 6rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  letter-spacing: -0.5px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-card {
+  padding: 2.25rem;
+  text-align: left;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+}
+
+.feature-step {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 3rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.03);
+  line-height: 1;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.feature-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.3px;
+}
+
+.feature-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+/* ==========================================================================
+   Profile Page
+   ========================================================================== */
+.profile-page {
+  padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.profile-hero-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: var(--instagram-gradient);
+  opacity: 0.12;
+}
+
+.profile-hero-content {
+  position: relative;
+  padding: 2.5rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+}
+
+/* Avatar */
+.profile-avatar-wrapper {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.profile-page-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--surface-color);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 2;
+}
+
+.profile-page-avatar-placeholder {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--surface-color-light);
+  border: 3px solid var(--surface-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  position: relative;
+  z-index: 2;
+}
+
+.profile-avatar-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--instagram-gradient);
+  z-index: 1;
+  animation: ringRotate 4s linear infinite;
+}
+
+@keyframes ringRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Username */
+.profile-page-username {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.profile-page-username a {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.profile-page-username a:hover {
+  opacity: 0.8;
+}
+
+/* Bio */
+.profile-page-bio {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  max-width: 380px;
+  line-height: 1.6;
+}
+
+/* Follower Showcase — The Main Feature */
+.follower-showcase {
+  position: relative;
+  padding: 2rem 0 1rem;
+}
+
+.follower-count-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.follower-count {
+  font-size: clamp(3.5rem, 8vw, 5rem);
+  font-weight: 900;
+  letter-spacing: -3px;
+  line-height: 1;
+  background: var(--instagram-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: countReveal 0.6s ease-out;
+}
+
+@keyframes countReveal {
+  from { opacity: 0; transform: scale(0.8) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.follower-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-tertiary);
+  margin-top: 0.35rem;
+}
+
+.follower-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(220,39,67,0.15) 0%, transparent 70%);
+  filter: blur(40px);
+  z-index: 1;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+}
+
+/* Stats Row */
+.profile-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.profile-stat {
+  text-align: center;
+}
+
+.profile-stat-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.profile-stat-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-tertiary);
+  margin-top: 0.15rem;
+}
+
+.profile-stat-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--glass-border);
+}
+
+/* Data Source Badge */
+.data-source-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  padding: 0.4rem 1rem;
+  background: rgba(52, 208, 88, 0.06);
+  border: 1px solid rgba(52, 208, 88, 0.12);
+  border-radius: var(--radius-pill);
+}
+
+.data-source-badge svg {
+  color: var(--success);
+}
+
+/* Owner Actions Card */
+.owner-actions {
+  width: 100%;
+  max-width: 520px;
+  padding: 1.75rem;
+  margin-top: 0.5rem;
+}
+
+.owner-actions-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.owner-share-text {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.6rem;
+}
+
+.share-link-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.share-link-box code {
+  flex: 1;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+  background: var(--surface-color-light);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-copy:hover {
+  background: var(--surface-color);
+  border-color: var(--glass-border-hover);
+  color: var(--text-primary);
+}
+
+.btn-copy.copied {
+  background: rgba(52, 208, 88, 0.1);
+  border-color: rgba(52, 208, 88, 0.3);
+  color: var(--success);
+}
+
+.owner-disconnect {
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.footer-bar {
+  text-align: center;
+  padding: 4rem 0 2rem;
+  color: var(--text-tertiary);
+  font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(20px, -40px) scale(1.05); }
+  50% { transform: translate(-15px, 20px) scale(0.95); }
+  75% { transform: translate(25px, 10px) scale(1.03); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(220, 39, 67, 0.35); }
+  50% { box-shadow: 0 0 0 12px rgba(220, 39, 67, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 39, 67, 0); }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 768px) {
+  .hero {
+    padding: 5rem 0 3rem;
+  }
+
+  .hero-title {
+    letter-spacing: -1px;
+  }
+
+  .url-preview {
+    max-width: 100%;
+  }
+
+  .profile-hero-content {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .follower-count {
+    font-size: 3rem;
+    letter-spacing: -2px;
+  }
+
+  .profile-stats-row {
+    gap: 1rem;
+  }
+
+  .profile-stat-value {
+    font-size: 0.95rem;
+  }
+
+  .share-link-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .share-link-box code {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .btn-cta {
+    padding: 0.9rem 2rem;
+    font-size: 0.95rem;
+  }
+
+  .owner-actions {
+    padding: 1.25rem;
+  }
+}
